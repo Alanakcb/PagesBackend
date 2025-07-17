@@ -6,7 +6,7 @@ from httpx import AsyncClient
 @pytest.mark.asyncio
 async def test_create_and_get_reviews(client: AsyncClient):
     # 1. Registro do usuário
-    await client.book(
+    await client.post(
         "/users/register",
         json={
             "name": "Comentador",
@@ -17,7 +17,7 @@ async def test_create_and_get_reviews(client: AsyncClient):
     )
 
     # 2. Login
-    login_response = await client.book(
+    login_response = await client.post(
         "/users/login",
         json={"email": "review@example.com", "password": "test@Review123"},
     )
@@ -26,7 +26,7 @@ async def test_create_and_get_reviews(client: AsyncClient):
     headers = {"Authorization": f"Bearer {token}"}
 
     # 3. Criação de book para comentar
-    book_response = await client.book(
+    book_response = await client.post(
         "/books/",
         json={
             "title": "Book para Comentário",
@@ -40,7 +40,7 @@ async def test_create_and_get_reviews(client: AsyncClient):
     book_id = book_response.json()["id"]
 
     # 4. Criar comentário
-    review_response = await client.book(
+    review_response = await client.post(
         "/reviews/",
         json={
             "book_id": book_id,

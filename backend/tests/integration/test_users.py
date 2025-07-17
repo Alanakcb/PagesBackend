@@ -5,7 +5,7 @@ import pytest
 @pytest.mark.asyncio
 async def test_register_and_login(client):
     # Registro
-    response = await client.book(
+    response = await client.post(
         "/users/register",
         json={
             "name": "Test",
@@ -19,7 +19,7 @@ async def test_register_and_login(client):
     assert data["message"] == "User registered successfully"
 
     # Login
-    response = await client.book(
+    response = await client.post(
         "/users/login", json={"email": "test@example.com", "password": "test@A123"}
     )
     assert response.status_code == 200

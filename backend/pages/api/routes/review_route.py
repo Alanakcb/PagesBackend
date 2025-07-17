@@ -56,13 +56,13 @@ async def add_review(
 ):
     if data.date.tzinfo is not None:
         data.date = data.date.replace(tzinfo=None)
-        review = Review(
-            id=str(uuid.uuid4()),
-            book_id=data.book_id,
-            user_id=user.id,
-            review=data.review,
-            date=data.date,
-        )
+    review = Review(
+        id=str(uuid.uuid4()),
+        book_id=data.book_id,
+        user_id=user.id,
+        review=data.review,
+        date=data.date,
+    )
     usecase = AddReviewUseCase(review_repo)
     added_review = await usecase.execute(review)
     if not added_review:

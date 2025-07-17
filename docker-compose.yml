@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile.dev
     container_name: blog
     env_file:
-      - backend/.env
+      - ./backend/.env
     volumes:
       - .:/app
     ports:

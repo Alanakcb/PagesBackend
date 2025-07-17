@@ -6,7 +6,7 @@ import datetime
 @pytest.mark.asyncio
 async def test_create_and_get_books(client: AsyncClient):
     # Registro + login
-    await client.book(
+    await client.post(
         "/users/register",
         json={
             "name": "Booker",
@@ -15,7 +15,7 @@ async def test_create_and_get_books(client: AsyncClient):
             "role": "user",
         },
     )
-    login_response = await client.book(
+    login_response = await client.post(
         "/users/login", json={"email": "booker@example.com", "password": "book@Test123"}
     )
     token = login_response.json()["access_token"]
@@ -28,7 +28,7 @@ async def test_create_and_get_books(client: AsyncClient):
         "date": datetime.datetime.now().isoformat(),
     }
 
-    response = await client.book(
+    response = await client.post(
         "/books/",
         json=book_data,
         headers={"Authorization": f"Bearer {token}"},

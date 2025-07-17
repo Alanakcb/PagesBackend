@@ -1,15 +1,13 @@
-export PYTHONPATH := $(PWD)
+export PYTHONPATH=$(PWD)
+
 
 .PHONY: test test-cov lint format typecheck run
 
 test:
-	pytest -v
-
-# test-cov:
-# 	pytest --cov=pages --cov-report=term-missing -v
+	PYTHONPATH=$(PYTHONPATH) pytest -v
 
 test-cov:
-	coverage run -m pytest
+	PYTHONPATH=$(PYTHONPATH) coverage run -m pytest
 	coverage report -m
 	coverage html
 
@@ -41,4 +39,3 @@ downgrade:
 
 run:
 	uvicorn pages.api.main:app --reload --host 0.0.0.0 --port 8000
-	

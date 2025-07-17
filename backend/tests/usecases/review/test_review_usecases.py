@@ -6,7 +6,7 @@ from pages.infra.repositories.in_memory.in_memory_review_repository import (
 )
 from pages.usecases.review.add_review import AddReviewUseCase
 from pages.usecases.review.delete_review import DeleteReviewUseCase
-from pages.usecases.review.get_review_by_post import GetReviewsByBookUseCase
+from pages.usecases.review.get_review_by_book import GetReviewsByBookUseCase
 from pages.usecases.review.get_review_by_user import GetReviewsByUserUseCase
 
 
