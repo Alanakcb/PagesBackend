@@ -73,7 +73,7 @@ app = FastAPI(
 
 origins = [
     "http://localhost:5173",  # Vite local
-    "https://pages-front-clean.vercel.app/",  # Produção
+    "https://pages-front-clean.vercel.app",  # Produção
 ]
 
 app.add_middleware(
