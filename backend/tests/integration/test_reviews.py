@@ -32,7 +32,6 @@ async def test_create_and_get_reviews(client: AsyncClient):
             "title": "Book para Comentário",
             "description": "Descrição do book",
             "content": "Conteúdo completo do book",
-            "date": datetime.datetime.now().isoformat(),
         },
         headers=headers,
     )
@@ -59,3 +58,19 @@ async def test_create_and_get_reviews(client: AsyncClient):
     assert list_response.status_code == 200
     reviews = list_response.json()
     assert any(c["review"] == "Primeiro comentário!" for c in reviews)
+
+    # 5. Buscar comentários por book
+    list_response = await client.put(
+        "/reviews/" + review_data["id"],
+        json={"book_id": book_id, "review": "Comentário atualizado!"},
+        headers=headers,
+    )
+    assert list_response.status_code == 200
+    reviews = list_response.json()
+    assert reviews["review"] == "Comentário atualizado!"
+
+    # 6. Deletar comentário
+    delete_response = await client.delete(
+        f"/reviews/{review_data['id']}", headers=headers
+    )
+    assert delete_response.status_code == 200

@@ -17,8 +17,6 @@ def create_test_book() -> Book:
         title="Título de Exemplo",
         description="Descrição de Exemplo",
         content="Conteúdo do book",
-        user_id=str(uuid.uuid4()),
-        date="2025-06-09",
     )
 
 
@@ -82,8 +80,6 @@ async def test_update_book():
         title="Título Atualizado",
         description="Descrição Atualizada",
         content="Novo conteúdo",
-        user_id=str(uuid.uuid4()),
-        date="2025-06-10",
     )
 
     usecase = UpdateBookUseCase(repo)

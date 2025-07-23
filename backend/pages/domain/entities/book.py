@@ -11,16 +11,10 @@ class Book:
         title: str,
         description: str,
         content: str,
-        user_id: str,
-        date: datetime,
-        user: Optional[User] = None,
         reviews: Optional[List[Review]] = None,
     ):
         self.id = id
         self.title = title
         self.description = description
         self.content = content
-        self.user_id = user_id
-        self.date = date
-        self.user = user
         self.reviews = reviews or []

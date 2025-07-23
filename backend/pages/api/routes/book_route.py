@@ -61,15 +61,11 @@ async def create_book(
     book_repo: BookRepository = Depends(get_book_repository),
 ):
     usecase = CreateBookUseCase(book_repo)
-    if data.date.tzinfo is not None:
-        data.date = data.date.replace(tzinfo=None)
     book = Book(
         id=str(uuid.uuid4()),
         title=data.title,
         description=data.description,
         content=data.content,
-        user_id=user.id,
-        date=data.date,
     )
     created_book = await usecase.execute(book)
     if not created_book:
@@ -90,12 +86,7 @@ async def update_book(
         raise HTTPException(status_code=404, detail="Book not found")
 
     updated_book = Book(
-        id=book_id,
-        title=data.title,
-        description=data.description,
-        content=data.content,
-        user_id=existing_book.user_id,
-        date=existing_book.date,
+        id=book_id, title=data.title, description=data.description, content=data.content
     )
     usecase_update = UpdateBookUseCase(book_repo)
     result = await usecase_update.execute(updated_book)

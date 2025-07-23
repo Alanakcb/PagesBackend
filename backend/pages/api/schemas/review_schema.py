@@ -13,7 +13,16 @@ class AddReviewInput(BaseModel):
     review: str = Field(
         ..., min_length=1, max_length=500, description="Texto do comentário"
     )
-    date: datetime = Field(..., description="Data do comentário no formato ISO 8601")
+
+
+class UpdateReviewInput(BaseModel):
+    book_id: str = Field(..., description="ID do comentário a ser atualizado")
+    review: str = Field(
+        ..., min_length=1, max_length=500, description="Texto atualizado do comentário"
+    )
+
+    class Config:
+        orm_mode = True
 
 
 class ReviewOutput(BaseModel):

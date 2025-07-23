@@ -12,6 +12,12 @@ class SQLAlchemyReviewRepository(ReviewRepository):
     def __init__(self, session: AsyncSession):
         self._session = session
 
+    async def get_all_reviews(self) -> List[Review]:
+        result = await self._session.execute(
+            select(ReviewModel).options(joinedload(ReviewModel.user))
+        )
+        return [c.to_entity() for c in result.unique().scalars().all()]
+
     async def get_reviews_by_book(self, book_id: str) -> List[Review]:
         result = await self._session.execute(
             select(ReviewModel)
@@ -34,6 +40,15 @@ class SQLAlchemyReviewRepository(ReviewRepository):
             raise ValueError("Book not found for the givenreview")
         db_review = ReviewModel.from_entity(review)
         self._session.add(db_review)
+        await self._session.commit()
+        await self._session.refresh(db_review)
+        return db_review.to_entity()
+
+    async def update_review(self, review: Review) -> Review:
+        db_review = await self._session.get(ReviewModel, review.id)
+        if not db_review:
+            raise ValueError("Review not found for the given ID")
+        db_review.review = review.review
         await self._session.commit()
         await self._session.refresh(db_review)
         return db_review.to_entity()

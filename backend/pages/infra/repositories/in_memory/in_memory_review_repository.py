@@ -9,6 +9,10 @@ class InMemoryReviewRepository(ReviewRepository):
         self._reviews = {}
 
     @pytest.mark.asyncio
+    async def get_all_reviews(self) -> List[Review]:
+        return list(self._reviews.values())
+
+    @pytest.mark.asyncio
     async def get_reviews_by_book(self, book_id: str) -> List[Review]:
         return [c for c in self._reviews.values() if c.book_id == book_id]
 
@@ -18,6 +22,10 @@ class InMemoryReviewRepository(ReviewRepository):
 
     @pytest.mark.asyncio
     async def add_review(self, review: Review) -> Review:
+        self._reviews[review.id] = review
+        return review
+
+    async def update_review(self, review):
         self._reviews[review.id] = review
         return review
 

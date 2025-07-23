@@ -18,7 +18,6 @@ class UserModel(Base):
     password: Mapped[str] = mapped_column(sa.String, nullable=False)
     role: Mapped[str] = mapped_column(sa.String, default="user")
 
-    books = relationship("BookModel", back_populates="user", cascade="all, delete")
     reviews = relationship("ReviewModel", back_populates="user", cascade="all, delete")
 
     @classmethod

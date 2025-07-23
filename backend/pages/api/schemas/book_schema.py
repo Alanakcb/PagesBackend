@@ -12,7 +12,6 @@ class BookCreateInput(BaseModel):
         ..., min_length=10, max_length=300, description="Descrição do book"
     )
     content: str = Field(..., min_length=20, description="Conteúdo do book")
-    date: datetime = Field(..., description="Data de criação do book")
 
 
 class BookUpdateInput(BaseModel):
@@ -30,8 +29,6 @@ class BookOutput(BaseModel):
         ..., min_length=10, max_length=300, description="Descrição do book"
     )
     content: str = Field(..., min_length=20, description="Conteúdo do book")
-    date: datetime = Field(..., description="Data de criação do book")
-    user: UserOutput = Field(..., description="Dados do usuário que está bookando")
 
     @classmethod
     def from_entity(cls, book):
@@ -40,9 +37,6 @@ class BookOutput(BaseModel):
             title=book.title,
             description=book.description,
             content=book.content,
-            user_id=book.user_id,
-            date=book.date,
-            user=book.user,
         )
 
 
@@ -52,8 +46,6 @@ def book_to_output(book: Book) -> BookOutput:
         title=book.title,
         content=book.content,
         description=book.description,
-        date=book.date,
-        user=user_to_output(book.user) if book.user else None,
     )
 
 

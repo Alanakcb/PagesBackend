@@ -15,12 +15,7 @@ class BookModel(Base):
     title: Mapped[str] = mapped_column(sa.String, nullable=False)
     description: Mapped[str] = mapped_column(sa.String, nullable=False)
     content: Mapped[str] = mapped_column(sa.Text, nullable=False)
-    user_id: Mapped[str] = mapped_column(
-        sa.String, sa.ForeignKey("users.id", ondelete="CASCADE")
-    )
-    date: Mapped[datetime] = mapped_column(sa.DateTime, default=datetime.now())
 
-    user = relationship("UserModel", back_populates="books", lazy="joined")
     reviews = relationship(
         "ReviewModel",
         back_populates="book",
@@ -36,8 +31,6 @@ class BookModel(Base):
             title=entity.title,
             description=entity.description,
             content=entity.content,
-            user_id=entity.user_id,
-            date=entity.date,
         )
 
     def to_entity(self) -> Book:
@@ -46,7 +39,4 @@ class BookModel(Base):
             title=self.title,
             description=self.description,
             content=self.content,
-            user_id=self.user_id,
-            date=self.date,
-            user=self.user.to_entity(),
         )

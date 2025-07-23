@@ -12,17 +12,14 @@ class SQLAlchemyBookRepository(BookRepository):
         self._session = session
 
     async def get_all(self) -> List[Book]:
-        result = await self._session.execute(
-            select(BookModel).options(joinedload(BookModel.user))
-        )
-        return [book.to_entity() for book in result.unique().scalars().all()]
+        result = await self._session.execute(select(BookModel))
+        books = result.unique().scalars().all()
+        print(books)
+        return [book.to_entity() for book in books]
 
     async def get_by_id(self, book_id: str) -> Optional[Book]:
         result = await self._session.execute(
-            select(BookModel)
-            .options(joinedload(BookModel.user))
-            .options(joinedload(BookModel.reviews))
-            .where(BookModel.id == book_id)
+            select(BookModel).where(BookModel.id == book_id)
         )
         book = result.unique().scalar_one_or_none()
         return book.to_entity() if book else None

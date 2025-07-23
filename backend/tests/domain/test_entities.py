@@ -19,7 +19,7 @@ def test_invalid_role():
 
 
 def test_create_book():
-    book = Book("1", "Title", "Desc", "Content", "user_id", "2024-01-01")
+    book = Book("1", "Title", "Desc", "Content")
     assert book.title == "Title"
 
 

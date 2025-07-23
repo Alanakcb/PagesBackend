@@ -25,7 +25,6 @@ async def test_create_and_get_books(client: AsyncClient):
         "title": "Título de teste",
         "description": "Descrição curta",
         "content": "Conteúdo completo do book",
-        "date": datetime.datetime.now().isoformat(),
     }
 
     response = await client.post(
