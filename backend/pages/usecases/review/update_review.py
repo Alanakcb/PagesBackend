@@ -7,5 +7,5 @@ class UpdateReviewUseCase:
     def __init__(self, repository: ReviewRepository):
         self.repository = repository
 
-    async def execute(self, review: Review) -> List[Review]:
+    async def execute(self, review: Review) -> Review:
         return await self.repository.update_review(review)

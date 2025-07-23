@@ -39,8 +39,6 @@ class SQLAlchemyBookRepository(BookRepository):
                 title=book.title,
                 description=book.description,
                 content=book.content,
-                user_id=book.user_id,
-                date=book.date,
             )
             .returning(BookModel)
         )
